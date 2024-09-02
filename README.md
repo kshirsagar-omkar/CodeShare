@@ -1,7 +1,7 @@
 # CodeShare
 
 ## Purpose
-This repository is designed for sharing code snippets, projects, and other programming-related content with friends, mentors, and collaborators. The code here is organized and documented for easy understanding and use.
+This repository is designed for sharing code snippets, projects, and other programming-related content with friends, mentors, and collaborators.
 
 ## How to Use
 - **For Contributors**: If you have suggestions or improvements, feel free to fork this repository and submit a pull request.
