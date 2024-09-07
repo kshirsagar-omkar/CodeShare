@@ -172,7 +172,7 @@ int main()
 
 
 
-	freeAll(head);
+	head = freeAll(head);
 
 	return 0;
 }
