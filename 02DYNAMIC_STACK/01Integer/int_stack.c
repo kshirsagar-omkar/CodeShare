@@ -2,69 +2,80 @@
 
 
 
-void init(struct Stack **top)
+void init(struct Stack *stack)
 {
-	//If given Stack is Pointing to some memory
-	freeStack(&(*top));
-	(*top)=BOTTOM;
+
+	freeStack(stack);	//if stack is not empty
+
+	stack->head = NULL;
+	stack->top = BOTTOM;
+};
+
+
+
+
+bool isEmpty(struct Stack *stack)
+{
+	return stack->top == BOTTOM;
 }
 
 
-bool isEmpty(struct Stack **top)
-{
-	return (*top) == BOTTOM;
-}
 
 
-void push(struct Stack **top, int data)
+void push(struct Stack *stack, int data)
 {
-	struct Stack *temp = NEWNODE;
+	struct node *temp = NEWNODE;
 	temp->next = NULL;
 	temp->prev = NULL;
 	temp->data = data;
 
-	if((*top) == BOTTOM)
+	if(stack->top == BOTTOM)
 	{
-		(*top) = temp;
-		return;
+		stack->head = temp;
+		stack->top = temp;
 	}
 	else
 	{
-		(*top)->next = temp;
-		temp->prev = (*top);
-		(*top) = (*top)->next;
+		stack->top->next = temp;
+		temp->prev = stack->top;
+		stack->top = stack->top->next;
 	}
-
 }
 
 
-int pop(struct Stack **top)
+int pop(struct Stack *stack)
 {
-	int data = (*top)->data;
-	struct Stack *temp = (*top);
-	(*top) = (*top)->prev;
+	int data = stack->top->data;
+	struct node *temp = stack->top;
 
-	if(*top)
+	stack->top = stack->top->prev;
+
+	if(stack->top != NULL)
 	{
-		(*top)->next = NULL;
+		stack->top->next = NULL;
+	}
+	else
+	{
+		stack->head = NULL;
 	}
 
 	free(temp);
 	return data;
-	
 }
 
 
 
-int peek(struct Stack **top)
+int peek(struct Stack *stack)
 {
-	return (*top)->data;
+	return stack->top->data;
 }
 
 
 
-
-void freeStack(struct Stack **top)
+void freeStack(struct Stack *stack)
 {
-	while( !isEmpty( &(*top) ) ) pop( &(*top) );
+	if(stack)
+	{
+		while( !isEmpty(stack) ) pop(stack);
+	}
 }

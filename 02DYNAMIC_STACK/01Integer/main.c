@@ -2,20 +2,21 @@
 
 #include "int_stack.h"
 
+
+
+
 int main()
 {
-	struct Stack *stack=NULL;
+	struct Stack *stack = (struct Stack*) malloc(sizeof(struct Stack));
+	init(stack);
 
-
-
-	init(&stack);
 
 	while(1)
 	{
-		int flag = false;
+		bool flag = false;
 		int choice = 0;
 		int data = 0;
-		printf("\nMenu : \n1.push\n2.pop\n3.peek\n4.exit\nEnter Choice : ");
+		printf("\nMenu : \n1.push\n2.pop\n3.peek\n4.exit\n\nEnter Choice : ");
 		scanf("%d", &choice);
 
 		switch(choice)
@@ -23,45 +24,47 @@ int main()
 			case 1:
 					printf("\nEnter Data : ");
 					scanf("%d",&data);
-					push(&stack, data);
+					push(stack, data);
 					break;
 			case 2:
-					if( isEmpty(&stack) )
+					if( isEmpty(stack) )
 					{
-						printf("stack is Empty\n");
+						printf("stack is Empty!!!\n");
 					}
 					else
 					{
-						printf("%d \n",pop(&stack));
+						printf("%d \n",pop(stack));
 					}
 					break;
 			case 3:
-					if( isEmpty(&stack) )
+					if( isEmpty(stack) )
 					{
-						printf("stack is Empty\n");
+						printf("stack is Empty!!!\n");
 					}
 					else
 					{
-						printf("%d \n",peek(&stack));
+						printf("%d \n",peek(stack));
 					}
 					break;
 			case 4:
 					flag = true;
 					break;
 			default:
-				printf("***Invalid Choice!!!***\n");
+				printf("\n***Invalid Choice!!!***\n");
 		}
 		if(flag)
 		{
-			printf("Ending The Application...\n");
+			printf("\nEnding The Application...\n");
 			break;
 		}
 	}
 
 
 
-	//Free All Remaing Stack After Succesfull Execution
-	freeStack(&stack);
+	freeStack(stack);
 
+
+	free(stack);
 	return 0;
 }
+
