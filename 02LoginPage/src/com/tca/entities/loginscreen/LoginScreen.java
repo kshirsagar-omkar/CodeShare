@@ -100,10 +100,11 @@ public class LoginScreen extends JFrame implements ActionListener {
     private void validateUser(String username, String password){
         if(username.equals("om") && password.equals("123"))
         {
-            System.out.println("Login Successfull!!!\n");
+            JOptionPane.showMessageDialog(null, "Login Successfull!!!");
+            System.exit(0);
         }
         else {
-            System.out.println("Wrong Username or Password!!!");
+            JOptionPane.showMessageDialog(null, "Wrong Username or Password!!!");
             passwordTextField.setText("");
             passwordTextField.requestFocus();
         }
