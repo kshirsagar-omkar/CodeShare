@@ -12,7 +12,7 @@ public class LoginScreen extends JFrame implements ActionListener {
 
     //TextFields for Username and Password
     JTextField userNameTextField;
-    JTextField passwordTextField;
+    JPasswordField passwordTextField;
 
     //Buttons for Login and Clear
     JButton loginButton;
@@ -46,7 +46,7 @@ public class LoginScreen extends JFrame implements ActionListener {
         this.add(passwordLabel);
 
         //passwordTextField
-        passwordTextField = new JTextField();
+        passwordTextField = new JPasswordField();
         passwordTextField.setSize(200,20);
         passwordTextField.setLocation(160,60);
         this.add(passwordTextField);
