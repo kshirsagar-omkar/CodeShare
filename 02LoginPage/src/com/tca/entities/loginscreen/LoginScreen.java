@@ -87,6 +87,9 @@ public class LoginScreen extends JFrame implements ActionListener {
             case "Clear":
                 userNameTextField.setText("");
                 passwordTextField.setText("");
+
+                //This set cursor to the given filed after clear the login form
+                userNameTextField.requestFocus();
                 break;
             default:
                 System.out.println("No Button Found!!");
@@ -102,6 +105,7 @@ public class LoginScreen extends JFrame implements ActionListener {
         else {
             System.out.println("Wrong Username or Password!!!");
             passwordTextField.setText("");
+            passwordTextField.requestFocus();
         }
     }
 
