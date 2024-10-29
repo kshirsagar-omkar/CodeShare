@@ -202,7 +202,7 @@ public class TicTacToe extends JFrame implements ActionListener {
             xWins(0,0,1,1,2,2);
         }
         if( (buttons[0][2].getText()=="X") && (buttons[1][1].getText()=="X") && (buttons[2][0].getText()=="X") ){
-            xWins(0,2,1,1,2,2);
+            xWins(0,2,1,1,2,0);
         }
     }
 
@@ -225,7 +225,7 @@ public class TicTacToe extends JFrame implements ActionListener {
             oWins(0,0,1,1,2,2);
         }
         if( (buttons[0][2].getText()=="O") && (buttons[1][1].getText()=="O") && (buttons[2][0].getText()=="O") ){
-            oWins(0,2,1,1,2,2);
+            oWins(0,2,1,1,2,0);
         }
     }
     
