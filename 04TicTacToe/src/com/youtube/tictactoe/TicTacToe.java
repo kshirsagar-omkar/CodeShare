@@ -178,55 +178,66 @@ public class TicTacToe extends JFrame implements ActionListener {
     public void check() {
         //check if X wins
 
-        this.checkXWins();
-        this.checkOWins();
-
-        this.checkTie();
+        if(this.checkXWins());
+        else if(this.checkOWins());
+        else this.checkTie();
     }
 
     
     //Helper Function
-    public void checkXWins() {
+    public boolean checkXWins() {
         //Check for Row And Columns
+        boolean wins = false;
         for(byte i=0; i<3; ++i){
             if( (buttons[i][0].getText()=="X") && (buttons[i][1].getText()=="X") && (buttons[i][2].getText()=="X") ){
                 xWins(i,0,i,1,i,2);
+                wins = true;
             }
             if( (buttons[0][i].getText()=="X") && (buttons[1][i].getText()=="X") && (buttons[2][i].getText()=="X") ){
                 xWins(0,i,1,i,2,i);
+                wins = true;
             }
         }
 
         //Check For Diagonals
         if( (buttons[0][0].getText()=="X") && (buttons[1][1].getText()=="X") && (buttons[2][2].getText()=="X") ){
             xWins(0,0,1,1,2,2);
+            wins = true;
         }
         if( (buttons[0][2].getText()=="X") && (buttons[1][1].getText()=="X") && (buttons[2][0].getText()=="X") ){
             xWins(0,2,1,1,2,0);
+            wins = true;
         }
+        return wins;
     }
 
 
     
     //Helper Function
-    public void checkOWins() {
+    public boolean checkOWins() {
         //Check for Row And Columns
+        boolean wins = false;
         for(byte i=0; i<3; ++i){
             if( (buttons[i][0].getText()=="O") && (buttons[i][1].getText()=="O") && (buttons[i][2].getText()=="O") ){
                 oWins(i,0,i,1,i,2);
+                wins = true;
             }
             if( (buttons[0][i].getText()=="O") && (buttons[1][i].getText()=="O") && (buttons[2][i].getText()=="O") ){
                 oWins(0,i,1,i,2,i);
+                wins = true;
             }
         }
 
         //Check For Diagonals
         if( (buttons[0][0].getText()=="O") && (buttons[1][1].getText()=="O") && (buttons[2][2].getText()=="O") ){
             oWins(0,0,1,1,2,2);
+            wins = true;
         }
         if( (buttons[0][2].getText()=="O") && (buttons[1][1].getText()=="O") && (buttons[2][0].getText()=="O") ){
             oWins(0,2,1,1,2,0);
+            wins = true;
         }
+        return wins;
     }
     
     //Check if it is tie
