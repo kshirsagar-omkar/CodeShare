@@ -161,7 +161,7 @@ public class StudentOperation {
         List<Student> students = StudentOperation.getAllStudents();
         if(students != null){
             for(Student student : students){
-                if(studentRollNumber == student.getStudentRollNo()){
+                if(studentRollNumber.equals(student.getStudentRollNo())){
                     return student;
                 }
             }
@@ -186,12 +186,11 @@ public class StudentOperation {
      */
     public static boolean deleteStudent(Integer studentRollNumber){
         List<Student> students = StudentOperation.getAllStudents();
-
-        if(students != null && !students.isEmpty()) {
+        if(students != null) {
 
             for (Student student : students) {
 
-                if (studentRollNumber == student.getStudentRollNo()){
+                if (studentRollNumber.equals(student.getStudentRollNo())){
                     students.remove(student);
                     try {
                         File file = new File(pathForStudentDatabaseFile);
@@ -200,7 +199,7 @@ public class StudentOperation {
                             return true;
                         }
                     }
-                    catch (IOException e){
+                    catch (Exception e){
                         e.printStackTrace();
                         return false;
                     }
@@ -232,7 +231,7 @@ public class StudentOperation {
         }
 
         for (Student ob : students){
-            if(student.getStudentRollNo() == ob.getStudentRollNo()){
+            if(student.getStudentRollNo().equals(ob.getStudentRollNo())){
                 ob.setStudentName( student.getStudentName() );
                 ob.setStudentPercentage(student.getStudentPercentage() );
                 //Logic to delete file and write all list again in file

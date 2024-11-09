@@ -8,17 +8,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * <p>Add Student Screen</p>
+ * The DisplayStudentScreen class provides a graphical interface for displaying
+ * student information based on the entered roll number.
  *
- * This class represents the GUI screen for adding a student, which includes fields for
- * entering the student's roll number, name, and percentage. It allows users to input
- * these details and save or clear them using corresponding buttons.
+ * This interface allows users to input a student roll number to search for,
+ * display the student's name and percentage if found, or clear all fields.
+ * It uses Swing components for the GUI and integrates with the StudentOperation
+ * class to access and manage student data.
  *
  * @author Omkar Kshirsagar
  * @version 1.0
  * @since 1.0
  */
-public class AddStudentScreen extends JFrame implements ActionListener {
+public class DisplayStudentScreen extends JFrame implements ActionListener {
 
     /**
      * Label to display "Student Roll Number" text beside the roll number field.
@@ -41,17 +43,17 @@ public class AddStudentScreen extends JFrame implements ActionListener {
     JTextField textFieldStudentRollNo;
 
     /**
-     * Text field for entering the student's name.
+     * Text field for displaying the student's name. This field is non-editable.
      */
     JTextField textFieldStudentName;
 
     /**
-     * Text field for entering the student's percentage.
+     * Text field for displaying the student's percentage. This field is non-editable.
      */
     JTextField textFieldStudentPercentage;
 
     /**
-     * Button to save the entered student information.
+     * Button to trigger the display of student information based on the roll number.
      */
     JButton buttonSave;
 
@@ -61,14 +63,14 @@ public class AddStudentScreen extends JFrame implements ActionListener {
     JButton buttonClear;
 
     /**
-     * Constructor for the AddStudentScreen class.
+     * Constructor for the DisplayStudentScreen class.
      *
-     * This constructor initializes the frame with layout settings, sets up the
-     * labels and text fields for roll number, name, and percentage, and adds
-     * "Save" and "Clear" buttons. The frame properties such as size, title,
-     * and location are also configured here.
+     * Initializes and sets up the frame layout, labels, text fields, and buttons.
+     * Configures the display properties of the frame and prepares it for user interaction.
+     * The roll number field is editable for input, while the name and percentage fields
+     * are non-editable and intended for display only.
      */
-    public AddStudentScreen() {
+    public DisplayStudentScreen() {
         this.setLayout(null);
 
         // Initialize and configure roll number label and text field
@@ -91,6 +93,7 @@ public class AddStudentScreen extends JFrame implements ActionListener {
         textFieldStudentName = new JTextField();
         textFieldStudentName.setLocation(220, 100);
         textFieldStudentName.setSize(200, 30);
+        textFieldStudentName.setEditable(false);
         this.add(textFieldStudentName);
 
         // Initialize and configure percentage label and text field
@@ -102,10 +105,11 @@ public class AddStudentScreen extends JFrame implements ActionListener {
         textFieldStudentPercentage = new JTextField();
         textFieldStudentPercentage.setLocation(220, 150);
         textFieldStudentPercentage.setSize(200, 30);
+        textFieldStudentPercentage.setEditable(false);
         this.add(textFieldStudentPercentage);
 
-        // Initialize and configure save and clear buttons
-        buttonSave = new JButton("SAVE");
+        // Initialize and configure show and clear buttons
+        buttonSave = new JButton("SHOW");
         buttonSave.setLocation(100, 220);
         buttonSave.setSize(90, 40);
         buttonSave.addActionListener(this);
@@ -117,9 +121,8 @@ public class AddStudentScreen extends JFrame implements ActionListener {
         buttonClear.addActionListener(this);
         this.add(buttonClear);
 
-
         // Configure the frame properties
-        this.setTitle("Add Student");
+        this.setTitle("Display Student");
         this.setVisible(true);
         this.setSize(500, 350);
         this.setLocation(730, 340);
@@ -127,33 +130,31 @@ public class AddStudentScreen extends JFrame implements ActionListener {
     }
 
     /**
-     * Handles action events for buttons in the AddStudentScreen.
-     * This method performs different actions based on the command triggered:
-     * - "SAVE": Attempts to save a student's information, displaying a success or error message accordingly.
-     * - "CLEAR": Clears all input fields for student data.
+     * Handles action events for the "SHOW" and "CLEAR" buttons.
      *
-     * @param e the ActionEvent triggered when a button is pressed, containing
-     *          the action command that determines which action to execute
-     * @since 1.0
+     * If "SHOW" is clicked, retrieves and displays student information based
+     * on the entered roll number. If the student is not found, shows an error message.
+     * If "CLEAR" is clicked, clears all input fields.
+     *
+     * @param e the ActionEvent triggered when a button is pressed
      */
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
-            case "SAVE":
-                System.out.println("save");
+            case "SHOW":
                 try {
                     Integer srno = Integer.parseInt(textFieldStudentRollNo.getText());
-                    String sname = textFieldStudentName.getText();
-                    Double sper = Double.parseDouble(textFieldStudentPercentage.getText());
-
-                    boolean status = StudentOperation.save(new Student(srno, sname, sper));
-                    if (status) {
-                        JOptionPane.showMessageDialog(null, "Record Added Successfully!!");
-                        this.clearTextFields();
+                    Student student = StudentOperation.searchStudent(srno);
+                    if (student != null) {
+                        textFieldStudentName.setText(student.getStudentName());
+                        textFieldStudentPercentage.setText(student.getStudentPercentage().toString());
                     } else {
-                        JOptionPane.showMessageDialog(null, "Unable to Add Records");
+                        JOptionPane.showMessageDialog(null, "Record Not Found : " + srno);
+                        this.clearTextFields();
                     }
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(null, "Invalid Input !!\nUnable to Add Records");
+                }
+                catch (Exception exception){
+                    JOptionPane.showMessageDialog(null, "Invalid Input!!");
+                    exception.printStackTrace();
                 }
                 break;
             case "CLEAR":
@@ -172,5 +173,4 @@ public class AddStudentScreen extends JFrame implements ActionListener {
         textFieldStudentPercentage.setText("");
         textFieldStudentRollNo.requestFocus();
     }
-
 }
