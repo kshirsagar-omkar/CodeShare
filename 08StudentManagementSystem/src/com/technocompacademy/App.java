@@ -1,5 +1,6 @@
 package com.technocompacademy;
 
+import com.technocompacademy.controller.HomeScreen;
 import com.technocompacademy.entities.students.Student;
 import com.technocompacademy.util.student.StudentOperation;
 import com.technocompacademy.view.AddStudentScreen;
@@ -26,7 +27,7 @@ public class App {
     public static void main(String[] args) {
 
 
-
+        new HomeScreen();
 
 
 

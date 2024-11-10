@@ -1,5 +1,6 @@
 package com.technocompacademy.util.student;
 
+import com.technocompacademy.config.ConfigurationTechnoCompAcademy;
 import com.technocompacademy.entities.students.Student;
 
 import java.io.*;
@@ -20,14 +21,14 @@ import java.util.List;
 
 
 public class StudentOperation {
-
-    /**
-     * File path for the student database CSV file.
-     * This file is used to store student data in a comma-separated format.
-     *
-     * @since 1.0
-     */
-    private static final String pathForStudentDatabaseFile = "src/resources/studentDataBase.csv";
+//
+//    /**
+//     * File path for the student database CSV file.
+//     * This file is used to store student data in a comma-separated format.
+//     *
+//     * @since 1.0
+//     */
+//    private static final String pathForStudentDatabaseFile = "src/resources/studentDataBase.csv";
 
 
 
@@ -49,7 +50,7 @@ public class StudentOperation {
             return false;
         }
 
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(pathForStudentDatabaseFile,true)) ) {
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(ConfigurationTechnoCompAcademy.pathForStudentDatabaseFile,true)) ) {
 
 //          retrieving student information from Student student.
             Integer studentRollNo = student.getStudentRollNo();
@@ -115,7 +116,7 @@ public class StudentOperation {
      */
     public static List<Student> getAllStudents(){
         List<Student> students = new ArrayList<>();
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(pathForStudentDatabaseFile))) {
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(ConfigurationTechnoCompAcademy.pathForStudentDatabaseFile))) {
             String record = null;
             while( (record = bufferedReader.readLine()) != null ){
                 String []token = record.split(",");
@@ -193,7 +194,7 @@ public class StudentOperation {
                 if (studentRollNumber.equals(student.getStudentRollNo())){
                     students.remove(student);
                     try {
-                        File file = new File(pathForStudentDatabaseFile);
+                        File file = new File(ConfigurationTechnoCompAcademy.pathForStudentDatabaseFile);
                         if(file.delete() && file.createNewFile()) {
                             StudentOperation.saveAll(students);
                             return true;
@@ -236,7 +237,7 @@ public class StudentOperation {
                 ob.setStudentPercentage(student.getStudentPercentage() );
                 //Logic to delete file and write all list again in file
                 try {
-                    File file = new File(pathForStudentDatabaseFile);
+                    File file = new File(ConfigurationTechnoCompAcademy.pathForStudentDatabaseFile);
                     if(file.delete() && file.createNewFile()){
                         StudentOperation.saveAll(students);
                         return true;
