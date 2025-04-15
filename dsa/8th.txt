@@ -1,0 +1,99 @@
+#include <iostream>
+#include <list>
+#include <string>
+using namespace std;
+
+const int TABLE_SIZE = 10; // Hash table size
+
+// Entry in the hash table
+class HashEntry {
+public:
+    string name;
+    string phone;
+
+    HashEntry(string name, string phone) {
+        this->name = name;
+        this->phone = phone;
+    }
+};
+
+// Hash Table class
+class HashTable {
+    list<HashEntry> table[TABLE_SIZE];  // Array of linked lists (chaining)
+
+    // Simple hash function: sum of ASCII values mod table size
+    int hashFunc(string name) {
+        int sum = 0;
+        for (char ch : name)
+            sum += ch;
+        return sum % TABLE_SIZE;
+    }
+
+public:
+    void insert(string name, string phone) {
+        int index = hashFunc(name);
+        // Check if name already exists and update it
+        for (auto& entry : table[index]) {
+            if (entry.name == name) {
+                entry.phone = phone;
+                cout << "Updated " << name << "'s number.\n";
+                return;
+            }
+        }
+        // Insert new entry
+        table[index].push_back(HashEntry(name, phone));
+        cout << "Inserted " << name << "'s number.\n";
+    }
+
+    void search(string name) {
+        int index = hashFunc(name);
+        for (auto& entry : table[index]) {
+            if (entry.name == name) {
+                cout << "Found: " << name << " → " << entry.phone << endl;
+                return;
+            }
+        }
+        cout << name << " not found in the directory.\n";
+    }
+
+    void remove(string name) {
+        int index = hashFunc(name);
+        for (auto it = table[index].begin(); it != table[index].end(); ++it) {
+            if (it->name == name) {
+                table[index].erase(it);
+                cout << name << " removed from the directory.\n";
+                return;
+            }
+        }
+        cout << name << " not found.\n";
+    }
+
+    void display() {
+        cout << "\n--- Telephone Directory ---\n";
+        for (int i = 0; i < TABLE_SIZE; i++) {
+            cout << "[" << i << "]: ";
+            for (auto& entry : table[i]) {
+                cout << "(" << entry.name << ", " << entry.phone << ") ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+// Main function to test
+int main() {
+    HashTable directory;
+
+    directory.insert("Alice", "9876543210");
+    directory.insert("Bob", "9123456780");
+    directory.insert("Charlie", "9000000000");
+    directory.insert("David", "8888888888");
+
+    directory.search("Charlie");
+    directory.remove("Bob");
+    directory.search("Bob");
+
+    directory.display();
+
+    return 0;
+}

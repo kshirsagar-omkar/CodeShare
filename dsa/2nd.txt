@@ -1,0 +1,64 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+string reverseString(string str) {
+    stack<char> s;
+    
+    for (char c : str)
+        s.push(c);
+
+    string reversed = "";
+    while (!s.empty()) {
+        reversed += s.top();
+        s.pop();
+    }
+    return reversed;
+}
+
+int main() {
+    string input = "AryanBoss";
+    string reversed = reverseString(input);
+    cout << "Reversed String: " << reversed << endl;
+    return 0;
+}
+
+
+
+
+#include <iostream>
+#include <stack>
+using namespace std;
+
+bool isBalanced(string expr) {
+    stack<char> s;
+
+    for (char ch : expr) {
+        if (ch == '(' || ch == '{' || ch == '[') {
+            s.push(ch);
+        } else {
+            if (s.empty()) return false;
+
+            char top = s.top();
+            if ((ch == ')' && top == '(') ||
+                (ch == '}' && top == '{') ||
+                (ch == ']' && top == '[')) {
+                s.pop();
+            } else {
+                return false;
+            }
+        }
+    }
+    return s.empty();
+}
+
+int main() {
+    string expr = "{[()]}";
+    if (isBalanced(expr))
+        cout << "Balanced" << endl;
+    else
+        cout << "Not Balanced" << endl;
+
+    return 0;
+}
+

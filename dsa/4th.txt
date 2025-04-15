@@ -1,0 +1,153 @@
+#include <iostream>
+using namespace std;
+
+#define SIZE 5
+
+class CircularQueue {
+    int arr[SIZE];
+    int front, rear;
+
+public:
+    CircularQueue() {
+        front = rear = -1;
+    }
+
+    void enqueue(int value) {
+        if ((front == 0 && rear == SIZE - 1) || (rear + 1 == front)) {
+            cout << "Queue Overflow\n";
+            return;
+        }
+        if (front == -1) front = 0;
+        rear = (rear + 1) % SIZE;
+        arr[rear] = value;
+        cout << value << " enqueued\n";
+    }
+
+    void dequeue() {
+        if (front == -1) {
+            cout << "Queue Underflow\n";
+            return;
+        }
+        cout << arr[front] << " dequeued\n";
+        if (front == rear) {
+            front = rear = -1; // Queue becomes empty
+        } else {
+            front = (front + 1) % SIZE;
+        }
+    }
+
+    void display() {
+        if (front == -1) {
+            cout << "Queue is empty\n";
+            return;
+        }
+        cout << "Queue: ";
+        int i = front;
+        while (true) {
+            cout << arr[i] << " ";
+            if (i == rear) break;
+            i = (i + 1) % SIZE;
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    CircularQueue q;
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+    q.enqueue(40);
+    q.enqueue(50); // Should show overflow
+    q.display();
+    q.dequeue();
+    q.enqueue(60); // Space becomes available
+    q.display();
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    int priority;
+    Node* next;
+
+    Node(int d, int p) {
+        data = d;
+        priority = p;
+        next = nullptr;
+    }
+};
+
+class PriorityQueue {
+    Node* front;
+
+public:
+    PriorityQueue() {
+        front = nullptr;
+    }
+
+    void enqueue(int data, int priority) {
+        Node* temp = new Node(data, priority);
+        if (!front || priority < front->priority) {
+            temp->next = front;
+            front = temp;
+        } else {
+            Node* curr = front;
+            while (curr->next && curr->next->priority <= priority) {
+                curr = curr->next;
+            }
+            temp->next = curr->next;
+            curr->next = temp;
+        }
+        cout << data << " inserted with priority " << priority << "\n";
+    }
+
+    void dequeue() {
+        if (!front) {
+            cout << "Queue Underflow\n";
+            return;
+        }
+        cout << front->data << " with priority " << front->priority << " dequeued\n";
+        Node* temp = front;
+        front = front->next;
+        delete temp;
+    }
+
+    void display() {
+        if (!front) {
+            cout << "Queue is empty\n";
+            return;
+        }
+        cout << "Priority Queue: ";
+        Node* curr = front;
+        while (curr) {
+            cout << "[" << curr->data << ", p" << curr->priority << "] ";
+            curr = curr->next;
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    PriorityQueue pq;
+    pq.enqueue(30, 2);
+    pq.enqueue(10, 1);
+    pq.enqueue(20, 3);
+    pq.display();
+    pq.dequeue();
+    pq.display();
+    return 0;
+}
+
